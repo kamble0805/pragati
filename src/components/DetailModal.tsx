@@ -1,6 +1,7 @@
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import ImageCarousel from "@/components/ImageCarousel";
 import { X } from "lucide-react";
+import ReactMarkdown from "react-markdown";
 
 interface DetailModalProps {
   isOpen: boolean;
@@ -31,7 +32,7 @@ const DetailModal = ({
         >
           <X className="h-4 w-4 text-foreground" />
         </button>
-        
+
         {/* Image Section */}
         {images && images.length > 0 && (
           <div className="relative">
@@ -61,10 +62,10 @@ const DetailModal = ({
               <p className="text-sm text-accent font-medium">{subtitle}</p>
             )}
           </DialogHeader>
-          
-          <p className="body-text text-muted-foreground leading-relaxed">
-            {description}
-          </p>
+
+          <div className="body-text text-muted-foreground leading-relaxed prose prose-sm dark:prose-invert max-w-none">
+            <ReactMarkdown>{description}</ReactMarkdown>
+          </div>
         </div>
       </DialogContent>
     </Dialog>

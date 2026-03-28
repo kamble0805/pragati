@@ -176,7 +176,7 @@ const Contact = () => {
                                         onChange={handleChange}
                                         required
                                         className="w-full px-4 py-3 bg-background border border-border/30 rounded-sm focus:outline-none focus:ring-2 focus:ring-accent/50 transition-all"
-                                        placeholder="John Doe"
+                                        placeholder="Enter your full name"
                                     />
                                 </div>
 
@@ -192,7 +192,7 @@ const Contact = () => {
                                         onChange={handleChange}
                                         required
                                         className="w-full px-4 py-3 bg-background border border-border/30 rounded-sm focus:outline-none focus:ring-2 focus:ring-accent/50 transition-all"
-                                        placeholder="john@example.com"
+                                        placeholder="Enter your email address"
                                     />
                                 </div>
 
@@ -208,7 +208,7 @@ const Contact = () => {
                                         onChange={handleChange}
                                         required
                                         className="w-full px-4 py-3 bg-background border border-border/30 rounded-sm focus:outline-none focus:ring-2 focus:ring-accent/50 transition-all"
-                                        placeholder="Project Inquiry"
+                                        placeholder="Briefly describe the purpose of your status"
                                     />
                                 </div>
 
@@ -224,7 +224,7 @@ const Contact = () => {
                                         required
                                         rows={6}
                                         className="w-full px-4 py-3 bg-background border border-border/30 rounded-sm focus:outline-none focus:ring-2 focus:ring-accent/50 transition-all resize-none"
-                                        placeholder="Tell us about your project..."
+                                        placeholder="Please provide details about your project, requirements, or any questions you may have..."
                                     />
                                 </div>
 

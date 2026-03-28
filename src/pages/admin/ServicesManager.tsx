@@ -18,7 +18,7 @@ import { toast } from "@/hooks/use-toast";
 import { useServices } from "@/contexts/ServicesContext";
 
 const ServicesManager = () => {
-  const { services, addService, toggleServiceVisibility } = useServices();
+  const { services, addService, updateService, deleteService, toggleServiceVisibility } = useServices();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [newService, setNewService] = useState({
     title: "",
@@ -110,23 +110,34 @@ const ServicesManager = () => {
       return;
     }
 
-    addService({
-      title: newService.title,
-      description: newService.description,
-      images: newService.images.length > 0 ? newService.images : ["/placeholder.svg"],
-      image_url: "", // Handled by context transformation
-      is_active: true,
-    });
+    if (editingId) {
+      updateService(editingId, {
+        title: newService.title,
+        description: newService.description,
+        images: newService.images,
+      });
+      toast({
+        title: "Success",
+        description: "Service updated successfully.",
+      });
+    } else {
+      addService({
+        title: newService.title,
+        description: newService.description,
+        images: newService.images.length > 0 ? newService.images : ["/placeholder.svg"],
+        image_url: "", // Handled by context transformation
+        is_active: true,
+      });
+      toast({
+        title: "Success",
+        description: "Service added successfully.",
+      });
+    }
 
-    toast({
-      title: "Success",
-      description: "Service added successfully.",
-    });
-
-    setNewService({ title: "", description: "", images: [] });
-    setImagePreviews([]);
-    setIsDialogOpen(false);
+    handleDialogChange(false);
   };
+
+  const [editingId, setEditingId] = useState<string | null>(null);
 
   const handleToggle = (id: string, currentState: boolean) => {
     toggleServiceVisibility(id);
@@ -135,6 +146,38 @@ const ServicesManager = () => {
       description: `Service ${currentState ? "hidden" : "activated"} successfully.`,
     });
   };
+
+  const handleDelete = (id: string) => {
+    if (confirm("Are you sure you want to delete this service?")) {
+      deleteService(id);
+      toast({
+        title: "Success",
+        description: "Service deleted successfully.",
+      });
+    }
+  };
+
+  const handleOpenEdit = (service: any) => {
+    setNewService({
+      title: service.title,
+      description: service.description,
+      images: service.images || [],
+    });
+    setImagePreviews(service.images || []);
+    setEditingId(service.id);
+    setIsDialogOpen(true);
+  };
+
+  // Reset dialog state when closed
+  const handleDialogChange = (open: boolean) => {
+    setIsDialogOpen(open);
+    if (!open) {
+      setNewService({ title: "", description: "", images: [] });
+      setImagePreviews([]);
+      setEditingId(null);
+    }
+  };
+
 
   return (
     <AdminLayout>
@@ -148,7 +191,7 @@ const ServicesManager = () => {
               Manage service visibility on your website.
             </p>
           </div>
-          <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+          <Dialog open={isDialogOpen} onOpenChange={handleDialogChange}>
             <DialogTrigger asChild>
               <Button className="gap-2">
                 <Plus className="w-4 h-4" />
@@ -157,7 +200,7 @@ const ServicesManager = () => {
             </DialogTrigger>
             <DialogContent className="sm:max-w-md max-h-[90vh] overflow-y-auto">
               <DialogHeader>
-                <DialogTitle className="editorial-heading">Add New Service</DialogTitle>
+                <DialogTitle className="editorial-heading">{editingId ? "Edit Service" : "Add New Service"}</DialogTitle>
               </DialogHeader>
               <div className="space-y-4 py-4">
                 <div className="space-y-2">
@@ -225,7 +268,7 @@ const ServicesManager = () => {
                   />
                 </div>
                 <Button onClick={handleAddService} className="w-full">
-                  Add Service
+                  {editingId ? "Save Changes" : "Add Service"}
                 </Button>
               </div>
             </DialogContent>
@@ -289,12 +332,18 @@ const ServicesManager = () => {
                         </p>
                       </div>
                     </div>
-                    <div className="flex items-center gap-2">
-                      <Switch
-                        checked={service.is_active}
-                        onCheckedChange={() => handleToggle(service.id, service.is_active)}
-                      />
-                    </div>
+                    <Switch
+                      checked={service.is_active}
+                      onCheckedChange={() => handleToggle(service.id, service.is_active)}
+                    />
+                  </div>
+                  <div className="flex justify-end gap-2 mt-4 pt-4 border-t border-border/50">
+                    <Button variant="outline" size="sm" onClick={() => handleOpenEdit(service)}>
+                      Edit
+                    </Button>
+                    <Button variant="destructive" size="sm" onClick={() => handleDelete(service.id)}>
+                      Delete
+                    </Button>
                   </div>
                 </CardContent>
               </Card>

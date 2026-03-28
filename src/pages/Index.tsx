@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
+import ReactMarkdown from "react-markdown";
 import ValuePrinciples from "@/components/ValuePrinciples";
 import BeforeAfterSlider from "@/components/BeforeAfterSlider";
 import ContactForm from "@/components/ContactForm";
@@ -104,9 +105,9 @@ const Index = () => {
             {featuredServices.map((service) => (
               <div key={service.id} className="bg-card border border-border/50 p-6 md:p-8 rounded-sm hover:-translate-y-1 transition-transform duration-300">
                 <h3 className="editorial-heading text-xl mb-3">{service.title}</h3>
-                <p className="body-text text-muted-foreground text-sm line-clamp-3 mb-4">
-                  {service.description}
-                </p>
+                <div className="body-text text-muted-foreground text-sm line-clamp-3 mb-4 prose prose-sm dark:prose-invert max-w-none [&>p]:m-0">
+                  <ReactMarkdown>{service.description}</ReactMarkdown>
+                </div>
                 {service.images && service.images.length > 0 && (
                   <div className="aspect-video w-full overflow-hidden mb-4 rounded-sm">
                     <img src={service.images[0]} alt={service.title} className="w-full h-full object-cover" />

@@ -60,7 +60,7 @@ const BlogDetail = () => {
         <div className="min-h-screen bg-background">
             <Navbar />
 
-            <main className="pt-20 pb-16">
+            <main className="pt-24 md:pt-28 pb-16">
                 {post ? (
                     <div className="container mx-auto px-4 max-w-7xl">
                         {/* Back Button */}

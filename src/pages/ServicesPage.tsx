@@ -4,6 +4,7 @@ import Footer from "@/components/Footer";
 import { useServices, Service } from "@/contexts/ServicesContext";
 import ImageCarousel from "@/components/ImageCarousel";
 import DetailModal from "@/components/DetailModal";
+import ReactMarkdown from "react-markdown";
 
 const ServicesPage = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -85,11 +86,9 @@ const ServicesPage = () => {
                         group-hover:translate-y-[-2px] group-hover:scale-[1.02] origin-left">
                         {service.title}
                       </h3>
-                      <p className="body-text text-muted-foreground text-sm leading-relaxed line-clamp-2
-                        transition-all duration-300 delay-75
-                        group-hover:text-muted-foreground/90">
-                        {service.description}
-                      </p>
+                      <div className="body-text text-muted-foreground text-sm leading-relaxed line-clamp-2 prose prose-sm dark:prose-invert max-w-none [&>p]:m-0">
+                        <ReactMarkdown>{service.description}</ReactMarkdown>
+                      </div>
                     </div>
 
                     <div className="absolute bottom-0 left-8 right-8 h-px 

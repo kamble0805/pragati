@@ -11,6 +11,8 @@ import {
   Menu,
   X,
   ArrowLeft,
+  Shield,
+  LayoutTemplate,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useAuth } from "@/contexts/AuthContext";
@@ -55,6 +57,16 @@ const AdminLayout = ({ children }: AdminLayoutProps) => {
       label: "Contact Submissions",
       href: "/admin/contacts",
       icon: Mail,
+    },
+    {
+      label: "Users",
+      href: "/admin/users",
+      icon: Shield, // I need to import Shield from lucide-react first
+    },
+    {
+      label: "Site Content",
+      href: "/admin/site-content",
+      icon: LayoutTemplate,
     },
   ];
 

@@ -47,7 +47,7 @@ const Blog = () => {
     <div className="min-h-screen bg-background">
       <Navbar />
 
-      <main className="pt-20">
+      <main className="pt-24 md:pt-28">
         <section ref={sectionRef} className="section-padding">
           <div className="container-editorial">
             <div className={`mb-12 md:mb-16 ${isVisible ? 'animate-fade-up' : 'opacity-0'}`}>
